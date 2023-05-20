@@ -1,6 +1,16 @@
+using FuelConsumptionApp.Contracts;
+using FuelConsumptionApp.Infra.Data.Contexts;
+using FuelConsumptionApp.Infra.Data.Services;
+using FuelConsumptionApp.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<DefaultDbContext>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

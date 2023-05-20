@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelConsumption.Api", "FuelConsumption.Api\FuelConsumption.Api.csproj", "{D19C87E8-F0E7-479D-A6C4-052554546A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelConsumptionApp.Api", "FuelConsumptionApp.Api\FuelConsumptionApp.Api.csproj", "{D19C87E8-F0E7-479D-A6C4-052554546A90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelConsumptionApp", "FuelConsumptionApp\FuelConsumptionApp.csproj", "{541DCA95-3234-42C5-BD8B-78F9AF35A759}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelConsumptionApp.Infra.Data", "FuelConsumptionApp.Infra.Data\FuelConsumptionApp.Infra.Data.csproj", "{F37777FB-A940-481A-BC31-12D62F6563ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D19C87E8-F0E7-479D-A6C4-052554546A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D19C87E8-F0E7-479D-A6C4-052554546A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D19C87E8-F0E7-479D-A6C4-052554546A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541DCA95-3234-42C5-BD8B-78F9AF35A759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541DCA95-3234-42C5-BD8B-78F9AF35A759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541DCA95-3234-42C5-BD8B-78F9AF35A759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541DCA95-3234-42C5-BD8B-78F9AF35A759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F37777FB-A940-481A-BC31-12D62F6563ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F37777FB-A940-481A-BC31-12D62F6563ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F37777FB-A940-481A-BC31-12D62F6563ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F37777FB-A940-481A-BC31-12D62F6563ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
