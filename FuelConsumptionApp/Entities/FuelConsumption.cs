@@ -9,12 +9,10 @@
         public bool IsRecorded => SerialNumber > 0;
 
         public FuelConsumption(
-            int serialNumber,
             int capacity,
             string owner
         )
         {
-            SerialNumber = serialNumber;
             Capacity = capacity;
             Owner = owner;
         }

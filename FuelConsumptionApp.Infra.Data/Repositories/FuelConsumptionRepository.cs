@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FuelConsumptionApp.Infra.Data.Repositories
 {
-    public class FuelConsumptionRepository
+    public class FuelConsumptionRepository : IFuelConsumptionRepository
     {
         protected readonly DefaultDbContext _context;
 
@@ -17,6 +17,11 @@ namespace FuelConsumptionApp.Infra.Data.Repositories
         public void Insert(FuelConsumption fuelConsumption)
         {
             _context.Set<FuelConsumption>().Add(fuelConsumption);
+        }
+
+        public async Task Insert(IEnumerable<FuelConsumption> fuelConsumptions)
+        {
+            await _context.Set<FuelConsumption>().AddRangeAsync(fuelConsumptions);
         }
 
         public void Update(FuelConsumption fuelConsumption)

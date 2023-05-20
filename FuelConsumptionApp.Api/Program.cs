@@ -1,16 +1,18 @@
 using FuelConsumptionApp.Contracts;
 using FuelConsumptionApp.Infra.Data.Contexts;
+using FuelConsumptionApp.Infra.Data.Repositories;
 using FuelConsumptionApp.Infra.Data.Services;
 using FuelConsumptionApp.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddDbContext<DefaultDbContext>();
+var connectionString = builder.Configuration.GetConnectionString("Default") ?? string.Empty;
+DefaultDbContext.Configure(builder.Services, connectionString);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IFuelConsumptionRepository, FuelConsumptionRepository>();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -32,5 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+DefaultDbContext.InitializeDatabase(app.Services);
+await DefaultDbContext.Seed(app.Services);
 
 app.Run();
