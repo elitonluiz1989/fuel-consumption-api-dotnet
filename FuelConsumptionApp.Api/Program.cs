@@ -10,11 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Default") ?? string.Empty;
 DefaultDbContext.Configure(builder.Services, connectionString);
 
+// Add services to the container.
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IFuelConsumptionRepository, FuelConsumptionRepository>();
+builder.Services.AddScoped<IFuelConsumptionService, FuelConsumptionService>();
 
-// Add services to the container.
+builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
@@ -31,8 +33,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(c => c
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
 
 DefaultDbContext.InitializeDatabase(app.Services);

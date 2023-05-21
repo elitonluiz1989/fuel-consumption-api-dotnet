@@ -15,10 +15,18 @@ namespace FuelConsumptionApp.Infra.Data.Mappings
         public void Configure(EntityTypeBuilder<FuelConsumption> builder)
         {
             builder.HasKey(p => p.SerialNumber);
+
+            builder.Property(p => p.SerialNumber)
+                .HasColumnOrder(0);
             builder.Property(p => p.Capacity)
+                .HasColumnOrder(1)
+                .IsRequired();
+            builder.Property(p => p.RefueledLiters)
+                .HasColumnOrder(2)
                 .IsRequired();
             builder.Property (p => p.Owner)
                 .HasColumnType("VARCHAR(50)")
+                .HasColumnOrder(3)
                 .IsRequired();
 
             builder.Ignore(p => p.IsRecorded);

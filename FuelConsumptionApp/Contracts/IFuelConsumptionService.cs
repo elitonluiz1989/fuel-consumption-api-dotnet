@@ -1,9 +1,13 @@
-﻿namespace FuelConsumptionApp.Contracts
+﻿using FuelConsumptionApp.Dtos;
+using FuelConsumptionApp.Entities;
+
+namespace FuelConsumptionApp.Contracts
 {
     public interface IFuelConsumptionService
     {
-        Task Fuel(int serialNumber, int liters);
-        Task Run(int serialNumber, int liters);
-        Task Count(int serialNumber);
+        Task<IEnumerable<FuelConsumption>> List();
+        Task<FuelConsumption?> Fuel(FuelConsumptionServiceDto dto);
+        Task<FuelConsumption?> Run(FuelConsumptionServiceDto dto);
+        Task<int> Count(int serialNumber);
     }
 }

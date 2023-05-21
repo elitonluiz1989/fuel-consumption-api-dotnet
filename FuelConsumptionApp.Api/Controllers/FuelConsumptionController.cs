@@ -1,4 +1,5 @@
 ﻿using FuelConsumptionApp.Contracts;
+using FuelConsumptionApp.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FuelConsumptionApp.Api.Controllers
@@ -7,18 +8,40 @@ namespace FuelConsumptionApp.Api.Controllers
     [ApiController]
     public class FuelConsumptionController : Controller
     {
+        private readonly IFuelConsumptionService _service;
+
         public FuelConsumptionController(
             INotificationService notificationService,
-            IUnitOfWork unitOfWork
+            IUnitOfWork unitOfWork,
+            IFuelConsumptionService service
         )
             : base(notificationService, unitOfWork)
-        {            
+        {
+            _service = service;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok("It's working!");
+            var cars = await _service.List();
+
+            return Ok(cars);
+        }
+
+        [HttpPut("fuel")]
+        public async Task<IActionResult> Fuel([FromBody] FuelConsumptionServiceDto dto)
+        {
+            var record = await _service.Fuel(dto);
+
+            return ResponseWithCommit(record);
+        }
+
+        [HttpPut("run")]
+        public async Task<IActionResult> Run([FromBody] FuelConsumptionServiceDto dto)
+        {
+            var record = await _service.Run(dto);
+
+            return ResponseWithCommit(record);
         }
     }
 }

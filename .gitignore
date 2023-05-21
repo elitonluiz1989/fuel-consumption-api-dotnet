@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /FuelConsumptionApp.Api/**/*.db
+/FuelConsumptionApp.Api/**/*.db-shm
+/FuelConsumptionApp.Api/**/*.db-wal
