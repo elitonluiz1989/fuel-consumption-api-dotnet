@@ -12,7 +12,7 @@ namespace FuelConsumptionApp.Infra.Data.Seeders
         internal static async Task Seed(IFuelConsumptionRepository repository)
         {
             if (repository is null)
-                throw new ArgumentNullException("Repository is not defined.");
+                return;
 
             _repository = repository;
 

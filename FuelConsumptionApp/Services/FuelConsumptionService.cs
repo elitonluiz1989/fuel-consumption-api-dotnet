@@ -1,6 +1,7 @@
 ﻿using FuelConsumptionApp.Contracts;
 using FuelConsumptionApp.Dtos;
 using FuelConsumptionApp.Entities;
+using FuelConsumptionApp.Resources;
 
 namespace FuelConsumptionApp.Services
 {
@@ -26,12 +27,12 @@ namespace FuelConsumptionApp.Services
         public async Task<FuelConsumption?> Fuel(FuelConsumptionServiceDto dto)
         {
             if (dto is null) {
-                _notificationService.AddNotification("The entered data is invalid");
+                _notificationService.AddNotification(StringResource.InvalidData);
 
                 return default;
             }
 
-            var record = await GetRecord(dto.SerialNumber);
+            var record = await GetCar(dto.SerialNumber);
 
             if (record is null || _notificationService.HasNotifications())
                 return default;
@@ -40,14 +41,14 @@ namespace FuelConsumptionApp.Services
 
             if (availableCapacity == 0)
             {
-                _notificationService.AddNotification($"The gas tank of the char with Serial Number {record.SerialNumber} is full");
+                _notificationService.AddNotification(string.Format(StringResource.TankIsFull, record.SerialNumber));
 
                 return default;
             }
 
             if (dto.Liters > availableCapacity)
             {
-                _notificationService.AddNotification($"The value entered to refuel exceeds the available capacity of the car with Serial Number {record.SerialNumber}");
+                _notificationService.AddNotification(string.Format(StringResource.RefuelExceedsCapacity, record.SerialNumber));
 
                 return default;
             }
@@ -63,19 +64,19 @@ namespace FuelConsumptionApp.Services
         {
             if (dto is null)
             {
-                _notificationService.AddNotification("The entered data is invalid");
+                _notificationService.AddNotification(StringResource.InvalidData);
 
                 return default;
             }
 
-            var record = await GetRecord(dto.SerialNumber);
+            var record = await GetCar(dto.SerialNumber);
 
             if (record is null || _notificationService.HasNotifications())
                 return default;
 
             if (record.RefueledLiters <= 0)
             {
-                _notificationService.AddNotification($"There aren't refueled liters to run the car with Serial Number {record.SerialNumber}");
+                _notificationService.AddNotification(string.Format(StringResource.TankIsEmpty, record.SerialNumber));
 
                 return default;
             }
@@ -84,7 +85,7 @@ namespace FuelConsumptionApp.Services
 
             if (currentLitersAvailable < 0)
             {
-                _notificationService.AddNotification($"The entered value exceeds the refueled liters to run the car with Serial Number {record.SerialNumber}");
+                _notificationService.AddNotification(string.Format(StringResource.ThereAreNotEnoughLitersToRun, record.SerialNumber));
 
                 return default;
             }
@@ -96,7 +97,7 @@ namespace FuelConsumptionApp.Services
 
         public async Task<int> Count(int serialNumber)
         {
-            var record = await GetRecord(serialNumber);
+            var record = await GetCar(serialNumber);
 
             if (record is null || _notificationService.HasNotifications())
                 return default;
@@ -104,14 +105,14 @@ namespace FuelConsumptionApp.Services
             return record.AvailableCapacity;
         }
 
-        private async Task<FuelConsumption?> GetRecord(int serialNumber)
+        private async Task<FuelConsumption?> GetCar(int serialNumber)
         {
             var record = await _repository.Find(serialNumber);
 
             if (record is not null)
                 return record;
 
-            _notificationService.AddNotification("Record was not found.");
+            _notificationService.AddNotification(string.Format(StringResource.CarWasNotFound, serialNumber));
 
             return default;
         }
